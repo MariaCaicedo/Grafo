@@ -1,9 +1,9 @@
 
 package grafos;
 
-public class Grafo {
+public class GrafoMatriz {
 
-	Grafo() {
+	public GrafoMatriz() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
