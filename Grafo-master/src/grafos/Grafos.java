@@ -9,22 +9,24 @@ public class Grafos {
 	private static GrafoLista grafoLista = new GrafoLista();
 
 	public static void main(String[] args) {
-		int opcionSelecionadaDelMenu = Integer.parseInt(JOptionPane.showInputDialog(null,
-				"0.Salir" + "\n" + "1.Matriz" + "\n" + "2.Lista", "MENU", JOptionPane.DEFAULT_OPTION));
-		if (opcionSelecionadaDelMenu == 1)
+		int opcionSelecionadaDelMenu = obtenerEnteroPorPantalla("0.Salir" + "\n" + "1.Matriz" + "\n" + "2.Lista");
+		int sizeGrafo = obtenerEnteroPorPantalla("Ingrese cantidad de nodos o vertices");
+		if (opcionSelecionadaDelMenu == 1) {
+			grafoMatriz = new GrafoMatriz(sizeGrafo);
 			menuGrafoMatriz();
-		else if (opcionSelecionadaDelMenu == 2)
+		} else if (opcionSelecionadaDelMenu == 2) {
+			grafoLista = new GrafoLista(sizeGrafo);
 			menuGrafoLista();
+		}
 		JOptionPane.showMessageDialog(null, "Que tenga buen dia", "Progama finalizado", JOptionPane.DEFAULT_OPTION);
 	}
 
 	private static void menuGrafoMatriz() {
 		String menu = "0. Salir" + "\n" + "11. Mostrar" + "\n" + "22. Insertar" + "\n" + "33. Eliminar."
 				+ " \n + 44. Buscar";
-		char datoObtenido;
+		int datoObtenido;
 		while (true) {
-			int opcionSelecionadaDelMenu = Integer
-					.parseInt(JOptionPane.showInputDialog(null, menu, "MENU", JOptionPane.DEFAULT_OPTION));
+			int opcionSelecionadaDelMenu = obtenerEnteroPorPantalla(menu);
 			switch (opcionSelecionadaDelMenu) {
 			case 0:
 				return;
@@ -34,8 +36,8 @@ public class Grafos {
 			case 22:
 				String datoAInsertar = JOptionPane.showInputDialog(null, "Debe ingresar un solo caracter",
 						"Ingrese Dato", JOptionPane.DEFAULT_OPTION);
-				datoObtenido = datoAInsertar.charAt(0);
-				grafoMatriz.insertar(datoObtenido);
+				datoObtenido = Integer.parseInt(datoAInsertar);
+				grafoMatriz.insertar(datoObtenido, datoObtenido);
 				break;
 			case 33:
 				String datoAEliminar = JOptionPane.showInputDialog(null, "Debe ingresar el caracter a eliminar",
@@ -56,8 +58,7 @@ public class Grafos {
 				+ " \n + 44. Buscar";
 		char datoObtenido;
 		while (true) {
-			int opcionSelecionadaDelMenu = Integer
-					.parseInt(JOptionPane.showInputDialog(null, menu, "MENU", JOptionPane.DEFAULT_OPTION));
+			int opcionSelecionadaDelMenu = obtenerEnteroPorPantalla(menu);
 			switch (opcionSelecionadaDelMenu) {
 			case 0:
 				return;
@@ -82,5 +83,20 @@ public class Grafos {
 
 			}
 		}
+	}
+
+	private static int obtenerEnteroPorPantalla(String message) {
+		int dato = 0;
+		while (true) {
+			try {
+				dato = Integer.parseInt(
+						JOptionPane.showInputDialog(null, message, "Ingrese un Numero", JOptionPane.DEFAULT_OPTION));
+				break;
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage(), "Caracter " + dato + " no Valido",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		return dato;
 	}
 }
