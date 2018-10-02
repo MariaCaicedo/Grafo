@@ -14,15 +14,6 @@ public class GrafoMatrizTest {
 	}
 
 	@Test
-	public void noPermiteInsertarDatosEnGrafoVacio() {
-		grafo.insertar(1, 2, 2);
-
-		int peso = grafo.getPeso(1, 2);
-
-		assertEquals("se esperaba que retornara -1 al no acceder a la posicion en la matriz", -1, peso);
-	}
-
-	@Test
 	public void debeCostruirUnGrafoCorrectamente() {
 		grafo = new GrafoMatriz(1);
 
@@ -40,5 +31,44 @@ public class GrafoMatrizTest {
 		int size = grafo.getSize();
 
 		assertEquals("se esperaba que no hayan nodos", 0, size);
+	}
+
+	@Test
+	public void noPermiteInsertarDatosEnGrafoVacio() {
+		grafo.insertar(1, 2, 2);
+		int peso = grafo.getPeso(1, 2);
+
+		assertEquals("se esperaba que retornara -1 al no acceder a la posicion en la matriz", -1, peso);
+	}
+
+	@Test
+	public void noPermiteInsertarPesoConOrigenInexistente() {
+		grafo = new GrafoMatriz(2);
+
+		grafo.insertar(-1, 1, 1);
+		int peso = grafo.getPeso(-1, 1);
+
+		assertEquals("se esperaba que retornara -1 al no acceder a la posicion en la matriz", -1, peso);
+	}
+
+	@Test
+	public void noPermiteInsertarPesoConDestinoInexistente() {
+		grafo = new GrafoMatriz(2);
+
+		grafo.insertar(0, 2, 1);
+		int peso = grafo.getPeso(0, 2);
+
+		assertEquals("se esperaba que retornara -1 al no acceder a la posicion en la matriz", -1, peso);
+	}
+
+	@Test
+	public void noDebePermitirInsertarUnPesoInferiora0() {
+		grafo = new GrafoMatriz(2);
+
+		grafo.insertar(0, 1, -3);
+		int peso = grafo.getPeso(0, 1);
+
+		assertEquals("se esperaba que retornara 0 al no modificar el peso", 0, peso);
+
 	}
 }

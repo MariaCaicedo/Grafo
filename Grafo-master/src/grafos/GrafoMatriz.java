@@ -32,10 +32,14 @@ public class GrafoMatriz {
 	}
 
 	public void insertar(int origen, int destino, int peso) {
-		try {
-			matriz[origen][destino] = peso;
-		} catch (Exception e) {
-			System.err.println("No se puede acceder al nodo " + e.getMessage());
+		if (peso > 0) {
+			try {
+				matriz[origen][destino] = peso;
+			} catch (Exception e) {
+				System.err.println("No se puede acceder al nodo " + e.getMessage());
+			}
+		} else {
+			System.err.println("No se puede colocar un peso negativo o sin valor. " + peso);
 		}
 	}
 
