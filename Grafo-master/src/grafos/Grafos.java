@@ -10,11 +10,13 @@ public class Grafos {
 
 	public static void main(String[] args) {
 		int opcionSelecionadaDelMenu = obtenerEnteroPorPantalla("0.Salir" + "\n" + "1.Matriz" + "\n" + "2.Lista");
-		int sizeGrafo = obtenerEnteroPorPantalla("Ingrese cantidad de nodos o vertices");
+		int sizeGrafo = 0;
 		if (opcionSelecionadaDelMenu == 1) {
+			sizeGrafo = obtenerEnteroPorPantalla("Ingrese cantidad de nodos o vertices");
 			grafoMatriz = new GrafoMatriz(sizeGrafo);
 			menuGrafoMatriz();
 		} else if (opcionSelecionadaDelMenu == 2) {
+			sizeGrafo = obtenerEnteroPorPantalla("Ingrese cantidad de nodos o vertices");
 			grafoLista = new GrafoLista(sizeGrafo);
 			menuGrafoLista();
 		}
@@ -22,8 +24,8 @@ public class Grafos {
 	}
 
 	private static void menuGrafoMatriz() {
-		String menu = "0. Salir" + "\n" + "11. Mostrar" + "\n" + "22. Insertar" + "\n" + "33. Eliminar."
-				+ " \n + 44. Buscar";
+		String menu = "0. Salir" + "\n" + "11. Mostrar" + "\n" + "22. Insertar" + "\n" + "33. Eliminar." + " \n"
+				+ "44. Buscar" + " \n" + "99. Volver";
 		int datoObtenido;
 		while (true) {
 			int opcionSelecionadaDelMenu = obtenerEnteroPorPantalla(menu);
@@ -34,10 +36,10 @@ public class Grafos {
 				grafoMatriz.dijkstra(0);
 				break;
 			case 22:
-				String datoAInsertar = JOptionPane.showInputDialog(null, "Debe ingresar un solo caracter",
-						"Ingrese Dato", JOptionPane.DEFAULT_OPTION);
-				datoObtenido = Integer.parseInt(datoAInsertar);
-				grafoMatriz.insertar(datoObtenido, datoObtenido);
+				int origen = obtenerEnteroPorPantalla("Ingrese el nodo origen");
+				int destino = obtenerEnteroPorPantalla("ingrese el nodo destino");
+				int peso = obtenerEnteroPorPantalla("ingrese el peso de la arista");
+				grafoMatriz.insertar(origen, destino, peso);
 				break;
 			case 33:
 				String datoAEliminar = JOptionPane.showInputDialog(null, "Debe ingresar el caracter a eliminar",
@@ -45,6 +47,10 @@ public class Grafos {
 				datoObtenido = datoAEliminar.charAt(0);
 				grafoMatriz.eliminar(datoObtenido);
 				break;
+			case 99:
+				System.out.println("se borraron valores ingresados");
+				main(new String[0]);
+				return;
 			default:
 				JOptionPane.showMessageDialog(null, "Opcion no valida", "Intente de nuevo",
 						JOptionPane.WARNING_MESSAGE);
