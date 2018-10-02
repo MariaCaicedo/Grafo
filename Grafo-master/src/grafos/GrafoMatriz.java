@@ -7,18 +7,36 @@ public class GrafoMatriz {
 	private int matriz[][];
 
 	public GrafoMatriz() {
-		super();
 		this.size = 0;
 		matriz = new int[size][size];
 	}
 
 	public GrafoMatriz(int size) {
-		this.size = size;
-		matriz = new int[size][size];
+		if (0 < size) {
+			this.size = size;
+			matriz = new int[size][size];
+			initMatriz();
+		} else {
+			this.size = 0;
+			matriz = new int[this.size][this.size];
+			System.err.println("No se puede crear un grafo sin Nodos, Valor ingresado: " + size);
+		}
 	}
 
-	public void insertar(int nodo, int peso) {
-		matriz[nodo][nodo] = peso;
+	private void initMatriz() {
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				matriz[i][j] = 0;
+			}
+		}
+	}
+
+	public void insertar(int origen, int destino, int peso) {
+		try {
+			matriz[origen][destino] = peso;
+		} catch (Exception e) {
+			System.err.println("No se puede acceder al nodo " + e.getMessage());
+		}
 	}
 
 	public void dijkstra(int i) {
@@ -27,8 +45,25 @@ public class GrafoMatriz {
 	}
 
 	public void eliminar(int nodo) {
-		matriz[nodo][nodo] = 0;
+		try {
+			matriz[nodo][nodo] = 0;
+		} catch (Exception e) {
+			System.err.println("No se puede acceder al nodo " + e.getMessage());
+		}
 
+	}
+
+	public int getPeso(int origen, int destino) {
+		try {
+			return matriz[origen][destino];
+		} catch (Exception e) {
+			System.err.println("No se puede acceder al nodo " + e.getMessage());
+			return -1;
+		}
+	}
+
+	public int getSize() {
+		return size;
 	}
 
 }
