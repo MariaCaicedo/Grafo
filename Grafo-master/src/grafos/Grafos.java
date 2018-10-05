@@ -33,7 +33,7 @@ public class Grafos {
 			case 0:
 				return;
 			case 11:
-				grafoMatriz.dijkstra(0);
+				grafoMatriz.caminoMinimoentredosVertices(0, 1);
 				break;
 			case 22:
 				int origen = obtenerEnteroPorPantalla("Ingrese el nodo origen");
