@@ -14,7 +14,7 @@ public class GrafoMatrizTest {
 	}
 
 	@Test
-	public void debeCostruirUnGrafoCorrectamente() {
+	public void debeCostruirUnGrafoCorrectamenteConUnValorDeAristasSuperiorACero() {
 		grafo = new GrafoMatriz(1);
 
 		int size = grafo.getSize();
@@ -25,7 +25,7 @@ public class GrafoMatrizTest {
 	}
 
 	@Test
-	public void noDebeConstruirUnGrafo() {
+	public void noDebeConstruirUnGrafoConUnvalorNegativoDeAristas() {
 		grafo = new GrafoMatriz(-1);
 
 		int size = grafo.getSize();
@@ -34,7 +34,7 @@ public class GrafoMatrizTest {
 	}
 
 	@Test
-	public void noPermiteInsertarDatosEnGrafoVacio() {
+	public void noPermiteInsertarDatosEnGrafoSinAristas() {
 		grafo.insertar(1, 2, 2);
 		int peso = grafo.getPeso(1, 2);
 
@@ -63,6 +63,17 @@ public class GrafoMatrizTest {
 
 	@Test
 	public void noDebePermitirInsertarUnPesoInferiora0() {
+		grafo = new GrafoMatriz(2);
+
+		grafo.insertar(0, 1, -3);
+		int peso = grafo.getPeso(0, 1);
+
+		assertEquals("se esperaba que retornara 0 al no modificar el peso", 0, peso);
+
+	}
+	
+	@Test
+	public void debePermitirInsertarPeso0() {
 		grafo = new GrafoMatriz(2);
 
 		grafo.insertar(0, 1, -3);
