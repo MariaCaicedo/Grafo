@@ -31,20 +31,21 @@ public class GrafoMatriz {
 		}
 	}
 
-	public void insertar(int origen, int destino, int peso) {
-		if (peso > 0) {
+	public boolean insertar(int origen, int destino, int peso) {
+		if (peso >= 0) {
 			try {
 				matriz[origen][destino] = peso;
+				return true;
 			} catch (Exception e) {
 				System.err.println("No se puede acceder al nodo " + e.getMessage());
 			}
 		} else {
 			System.err.println("No se puede colocar un peso negativo o sin valor. " + peso);
 		}
+		return false;
 	}
 
 	public void dijkstra(int i) {
-		// TODO Auto-generated method stub
 
 	}
 

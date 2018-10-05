@@ -1,6 +1,8 @@
 package grafos;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,10 +36,11 @@ public class GrafoMatrizTest {
 	}
 
 	@Test
-	public void noPermiteInsertarDatosEnGrafoSinAristas() {
-		grafo.insertar(1, 2, 2);
+	public void noPermiteInsertarDatosEnGrafoSinVertices() {
+		boolean insertado = grafo.insertar(1, 2, 2);
 		int peso = grafo.getPeso(1, 2);
 
+		assertFalse("se esperaba no inserte la arista", insertado);
 		assertEquals("se esperaba que retornara -1 al no acceder a la posicion en la matriz", -1, peso);
 	}
 
@@ -45,9 +48,10 @@ public class GrafoMatrizTest {
 	public void noPermiteInsertarPesoConOrigenInexistente() {
 		grafo = new GrafoMatriz(2);
 
-		grafo.insertar(-1, 1, 1);
+		boolean insertado = grafo.insertar(-1, 1, 1);
 		int peso = grafo.getPeso(-1, 1);
 
+		assertFalse("se esperaba no inserte la arista", insertado);
 		assertEquals("se esperaba que retornara -1 al no acceder a la posicion en la matriz", -1, peso);
 	}
 
@@ -55,31 +59,46 @@ public class GrafoMatrizTest {
 	public void noPermiteInsertarPesoConDestinoInexistente() {
 		grafo = new GrafoMatriz(2);
 
-		grafo.insertar(0, 2, 1);
+		boolean insertado = grafo.insertar(0, 2, 1);
 		int peso = grafo.getPeso(0, 2);
 
+		assertFalse("se esperaba no inserte la arista", insertado);
 		assertEquals("se esperaba que retornara -1 al no acceder a la posicion en la matriz", -1, peso);
 	}
 
 	@Test
-	public void noDebePermitirInsertarUnPesoInferiora0() {
+	public void noDebePermitirInsertarUnPesoInferiorA0() {
 		grafo = new GrafoMatriz(2);
 
-		grafo.insertar(0, 1, -3);
+		boolean insertado = grafo.insertar(0, 1, -3);
 		int peso = grafo.getPeso(0, 1);
 
+		assertFalse("se esperaba no inserte la arista", insertado);
 		assertEquals("se esperaba que retornara 0 al no modificar el peso", 0, peso);
 
 	}
-	
+
 	@Test
 	public void debePermitirInsertarPeso0() {
 		grafo = new GrafoMatriz(2);
 
-		grafo.insertar(0, 1, -3);
+		boolean insertado = grafo.insertar(0, 1, 0);
 		int peso = grafo.getPeso(0, 1);
 
-		assertEquals("se esperaba que retornara 0 al no modificar el peso", 0, peso);
+		assertTrue("se esperaba inserte la arista", insertado);
+		assertEquals("se esperaba que retornara 0 al no haber camino entre las aristas", 0, peso);
+
+	}
+
+	@Test
+	public void debePermitirInsertarUnPesoSuperiorA0() {
+		grafo = new GrafoMatriz(2);
+
+		boolean insertado = grafo.insertar(0, 1, 8);
+		int peso = grafo.getPeso(0, 1);
+
+		assertTrue("se esperaba inserte la arista", insertado);
+		assertEquals("se esperaba que existiera camino de peso 8 entre las aristas", 8, peso);
 
 	}
 }
