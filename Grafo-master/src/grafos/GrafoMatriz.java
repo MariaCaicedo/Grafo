@@ -1,7 +1,6 @@
 
 package grafos;
 
-import java.util.List;
 import java.util.Optional;
 
 public class GrafoMatriz {
@@ -11,7 +10,7 @@ public class GrafoMatriz {
 	private int matriz[][];
 	private int origen;
 	private int distanciaMinima[];
-	private int s[];
+	private int verticesVisitados[];
 	private int ruta[];
 
 	public GrafoMatriz() {
@@ -54,8 +53,8 @@ public class GrafoMatriz {
 		return false;
 	}
 
-	public Optional<List<Integer>> caminoMinimoentredosVertices(int origen, int destino) {
-		if (origen <= 0 || destino >= this.size) {
+	public Optional<int[]> caminoMinimoentredosVertices(int origen, int destino) {
+		if (origen <= 0 || (destino < this.size && destino > 0)) {
 			if (this.origen == -1 || this.origen != origen) {
 				this.origen = origen;
 				dijkstra();
@@ -68,23 +67,45 @@ public class GrafoMatriz {
 	}
 
 	private void dijkstra() {
-		// initiation of variables
-		distanciaMinima = new int[this.size];
-		s = new int[this.size];
-		ruta = new int[this.size];
-		
-		for (int k = 0; k < this.size; k++) {
-			distanciaMinima[k] = matriz[this.origen][k];
-			s[k] = 0;
-			ruta[k] = k;
-			for (int j = 0; j < this.size; j++) {
+		inicializarVaribalesParaDistanciaMinima();
 
+		for (int k = 0; k < this.size; k++) {
+			int w = obtenerVerticeConMenorPesoYsinVisitar();
+			verticesVisitados[w] = 1;
+			for (int j = 0; j < this.size; j++) {
+				int paso = 0;
+				if (verticesVisitados[j] == 0) {
+					paso = distanciaMinima[w] + matriz[w][j];
+					if (paso < distanciaMinima[j]) {
+						distanciaMinima[j] = paso;
+						ruta[j] = w;
+					}
+				}
 			}
 		}
 	}
 
-	private Optional<List<Integer>> obtenerCamino(int destino) {
-		// TODO: create
+	private void inicializarVaribalesParaDistanciaMinima() {
+		distanciaMinima = new int[this.size];
+		verticesVisitados = new int[this.size];
+		ruta = new int[this.size];
+
+		for (int k = 0; k < this.size; k++) {
+			distanciaMinima[k] = matriz[this.origen][k];
+			verticesVisitados[k] = 0;
+			ruta[k] = 0;
+		}
+	}
+
+	private int obtenerVerticeConMenorPesoYsinVisitar() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private Optional<int[]> obtenerCamino(int destino) {
+		if (ruta.length > 0 && ruta[1] != 0) {
+			return Optional.of(ruta);
+		}
 		return Optional.empty();
 	}
 

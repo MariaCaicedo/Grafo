@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -107,7 +106,7 @@ public class GrafoMatrizTest {
 
 	@Test
 	public void noDebeCalcularElCaminoMinimoConOrigenInexistente() {
-		Optional<List<Integer>> caminoMinio = grafo.caminoMinimoentredosVertices(-1, 0);
+		Optional<int[]> caminoMinio = grafo.caminoMinimoentredosVertices(-1, 0);
 
 		assertFalse("se espera que el camino este vacio", caminoMinio.isPresent());
 	}
@@ -116,7 +115,7 @@ public class GrafoMatrizTest {
 	public void noDebeCalcularElCaminoMinimoConDestinoInexistente() {
 		grafo = new GrafoMatriz(5);
 
-		Optional<List<Integer>> caminoMinio = grafo.caminoMinimoentredosVertices(0, 10);
+		Optional<int[]> caminoMinio = grafo.caminoMinimoentredosVertices(0, 10);
 
 		assertFalse("se espera que el camino este vacio", caminoMinio.isPresent());
 	}
@@ -125,7 +124,7 @@ public class GrafoMatrizTest {
 	public void nodebeCalcularElCaminoMinimoConOrigenYDestinoIguales() {
 		grafo = new GrafoMatriz(5);
 
-		Optional<List<Integer>> caminoMinio = grafo.caminoMinimoentredosVertices(0, 0);
+		Optional<int[]> caminoMinio = grafo.caminoMinimoentredosVertices(0, 0);
 
 		assertFalse("se espera que el camino este vacio", caminoMinio.isPresent());
 	}
@@ -135,7 +134,7 @@ public class GrafoMatrizTest {
 		grafo = new GrafoMatriz(2);
 		boolean insertado = grafo.insertar(0, 1, 0);
 
-		Optional<List<Integer>> caminoMinio = grafo.caminoMinimoentredosVertices(0, 1);
+		Optional<int[]> caminoMinio = grafo.caminoMinimoentredosVertices(0, 1);
 
 		assertTrue("se esperaba que el camino con peso 3 fuese insertado", insertado);
 		assertFalse("se espera que el camino este vacio", caminoMinio.isPresent());
@@ -146,10 +145,10 @@ public class GrafoMatrizTest {
 		grafo = new GrafoMatriz(2);
 		boolean insertado = grafo.insertar(0, 1, 3);
 
-		Optional<List<Integer>> caminoMinio = grafo.caminoMinimoentredosVertices(0, 1);
+		Optional<int[]> caminoMinio = grafo.caminoMinimoentredosVertices(0, 1);
 
 		assertTrue("se esperaba que el camino con peso 3 fuese insertado", insertado);
 		assertTrue("se espera que el camino contenga datos", caminoMinio.isPresent());
-		assertEquals("se espera que el camno contenga 2 vertices", 2, caminoMinio.get().size());
+		assertEquals("se espera que el camno contenga 2 vertices", 2, caminoMinio.get().length);
 	}
 }
