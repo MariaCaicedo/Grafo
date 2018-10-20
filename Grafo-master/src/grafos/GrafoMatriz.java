@@ -53,8 +53,8 @@ public class GrafoMatriz {
 		return false;
 	}
 
-	public Optional<int[]> caminoMinimoentredosVertices(int origen, int destino) {
-		if (origen <= 0 || (destino < this.size && destino > 0)) {
+	public Optional<int[]> caminoMinimoEntreDosVertices(int origen, int destino) {
+		if (origen >= 0 && (destino < this.size && destino > 0)) {
 			if (this.origen == -1 || this.origen != origen) {
 				this.origen = origen;
 				dijkstra();
@@ -68,7 +68,7 @@ public class GrafoMatriz {
 
 	private void dijkstra() {
 		inicializarVaribalesParaDistanciaMinima();
-
+		verticesVisitados[this.origen] = 1;
 		for (int k = 0; k < this.size; k++) {
 			int w = obtenerVerticeConMenorPesoYsinVisitar();
 			verticesVisitados[w] = 1;
@@ -76,7 +76,7 @@ public class GrafoMatriz {
 				int paso = 0;
 				if (verticesVisitados[j] == 0) {
 					paso = distanciaMinima[w] + matriz[w][j];
-					if (paso < distanciaMinima[j]) {
+					if (paso < distanciaMinima[j] && paso != 0) {
 						distanciaMinima[j] = paso;
 						ruta[j] = w;
 					}
@@ -89,21 +89,31 @@ public class GrafoMatriz {
 		distanciaMinima = new int[this.size];
 		verticesVisitados = new int[this.size];
 		ruta = new int[this.size];
-
-		for (int k = 0; k < this.size; k++) {
-			distanciaMinima[k] = matriz[this.origen][k];
-			verticesVisitados[k] = 0;
-			ruta[k] = 0;
-		}
 	}
 
 	private int obtenerVerticeConMenorPesoYsinVisitar() {
-		// TODO Auto-generated method stub
-		return 0;
+		int peso = Integer.MAX_VALUE;
+		int nodo = 0;
+		for (int i = 0; i < this.size; i++) {
+			for (int j = 0; j < this.size; j++) {
+				peso = distanciaMinima[i] + matriz[i][j];
+			}
+			if (peso < distanciaMinima[i])
+				nodo = i;
+
+		}
+		return nodo;
 	}
 
 	private Optional<int[]> obtenerCamino(int destino) {
-		if (ruta.length > 0 && ruta[1] != 0) {
+		boolean hayCamino = false;
+		for (int i = 0; i < this.size; i++) {
+			if (ruta[i] != 0) {
+				hayCamino = true;
+				break;
+			}
+		}
+		if (hayCamino) {
 			return Optional.of(ruta);
 		}
 		return Optional.empty();
