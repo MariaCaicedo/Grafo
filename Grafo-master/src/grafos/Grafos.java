@@ -39,7 +39,14 @@ public class Grafos {
 				int origen = obtenerEnteroPorPantalla("Ingrese el nodo origen");
 				int destino = obtenerEnteroPorPantalla("ingrese el nodo destino");
 				int peso = obtenerEnteroPorPantalla("ingrese el peso de la arista");
-				grafoMatriz.insertar(origen, destino, peso);
+				boolean inserto = grafoMatriz.insertar(origen, destino, peso);
+                                if(inserto){
+                                    JOptionPane.showMessageDialog(null, "Insertado", "Arista con peso " + peso+ " Entre los nodos "+origen +" "+destino+" Insertada Correctamente.",
+						JOptionPane.INFORMATION_MESSAGE);
+                                }else{
+                                    JOptionPane.showMessageDialog(null, "Error", "Arista con peso " + peso+ " Entre los nodos "+origen +" "+destino+" No insertada.",
+						JOptionPane.ERROR_MESSAGE);
+                                }
 				break;
 			case 33:
 				String datoAEliminar = JOptionPane.showInputDialog(null, "Debe ingresar el caracter a eliminar",

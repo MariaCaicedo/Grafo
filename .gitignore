@@ -9,3 +9,7 @@
 *.class
 Grafo-master/.classpath
 Grafo-master/.project
+/Grafo-master/build/
+Grafo-master/nbproject/private/private.properties
+Grafo-master/nbproject/private/private.properties
+*.properties
