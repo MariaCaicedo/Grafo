@@ -1,11 +1,17 @@
 package grafos;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import javax.swing.JOptionPane;
 
 public class Grafos {
 
     private static GrafoMatriz grafoMatriz = new GrafoMatriz();
     private static GrafoLista grafoLista = new GrafoLista();
+
+    private static int origen;
+    private static int destino;
 
     public static void main(String[] args) {
         int opcionSelecionadaDelMenu = obtenerEnteroPorPantalla("0.Salir" + "\n" + "1.Matriz" + "\n" + "2.Lista");
@@ -24,7 +30,7 @@ public class Grafos {
 
     private static void menuGrafoMatriz() {
         String menu = "0. Salir" + "\n" + "11. Mostrar Grafo" + "\n" + "22. Insertar" + "\n" + "33. Eliminar." + " \n"
-                + "44. Buscar" + " \n" + "99. Volver";
+                + "44. Distancia minima entre nodos" + " \n" + "99. Volver";
         int datoObtenido;
         while (true) {
             int opcionSelecionadaDelMenu = obtenerEnteroPorPantalla(menu);
@@ -40,12 +46,11 @@ public class Grafos {
                         }
                         mostrarMatriz += "\n";
                     }
-
                     JOptionPane.showMessageDialog(null, mostrarMatriz, "Grafo", JOptionPane.DEFAULT_OPTION);
                     break;
                 case 22:
-                    int origen = obtenerEnteroPorPantalla("Ingrese el nodo origen");
-                    int destino = obtenerEnteroPorPantalla("ingrese el nodo destino");
+                    origen = obtenerEnteroPorPantalla("Ingrese el nodo origen");
+                    destino = obtenerEnteroPorPantalla("ingrese el nodo destino");
                     int peso = obtenerEnteroPorPantalla("ingrese el peso de la arista");
                     boolean inserto = grafoMatriz.insertar(origen, destino, peso);
                     if (inserto) {
@@ -61,6 +66,21 @@ public class Grafos {
                             "Eliminar Caracter", JOptionPane.DEFAULT_OPTION);
                     datoObtenido = datoAEliminar.charAt(0);
                     grafoMatriz.eliminar(datoObtenido);
+                    break;
+                case 44:
+                    origen = obtenerEnteroPorPantalla("Ingrese el nodo origen");
+                    destino = obtenerEnteroPorPantalla("ingrese el nodo destino");
+                    int distanciaMinima = grafoMatriz.getDistanciaMinima(origen, destino);
+                    JOptionPane.showMessageDialog(null, "LA distancia minima entre los nodos "
+                            + origen + " y " + destino
+                            + " es " + distanciaMinima,
+                            "La Distancia Minima es", JOptionPane.DEFAULT_OPTION
+                    );
+                    break;
+                case 55:
+                    origen = obtenerEnteroPorPantalla("Ingrese el nodo origen");
+                    Optional<List> ruta = grafoMatriz.caminoMinimoEntreDosVertices(origen, 0);
+                    JOptionPane.showMessageDialog(null, Arrays.deepToString(ruta.get().toArray()), "ruta", JOptionPane.DEFAULT_OPTION);
                     break;
                 case 99:
                     System.out.println("se borraron valores ingresados");

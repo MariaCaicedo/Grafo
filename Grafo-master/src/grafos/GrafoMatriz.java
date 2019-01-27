@@ -151,4 +151,17 @@ public class GrafoMatriz {
         }
         return matrizAMostrar;
     }
+
+    int getDistanciaMinima(int origen, int destino) {
+        if(destino < this.size && origen >= 0){
+            if(origen != this.origen){
+                this.origen=origen;
+                dijkstra();
+            }
+            return distanciaMinima[destino];
+        }else{
+          System.err.println(NO_SE_PUEDE_ACCEDER_AL_NODO + 0);
+        }
+        return 0;
+    }
 }

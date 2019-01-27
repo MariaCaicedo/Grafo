@@ -195,4 +195,14 @@ public class GrafoMatrizTest {
         assertEquals("se espera que el nodo de origen sea 0", 0, (int) ruta.get(0));
         assertEquals("se espera que el nodo de destino sea 1", 1, (int) ruta.get(1));
     }
+
+    @Test
+    public void debeObtenerLaDistanciaMinimaEntre0y2() {
+        grafo = new GrafoMatriz(3);
+        grafo.insertar(0, 2, 5);
+
+        int distanciaMinima = grafo.getDistanciaMinima(0, 2);
+
+        assertEquals("debe obtener la distancia minima", 5, distanciaMinima);
+    }
 }
