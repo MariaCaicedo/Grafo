@@ -1,4 +1,3 @@
-
 package grafos;
 
 import javax.swing.JOptionPane;
@@ -24,7 +23,7 @@ public class Grafos {
     }
 
     private static void menuGrafoMatriz() {
-        String menu = "0. Salir" + "\n" + "11. Mostrar" + "\n" + "22. Insertar" + "\n" + "33. Eliminar." + " \n"
+        String menu = "0. Salir" + "\n" + "11. Mostrar Grafo" + "\n" + "22. Insertar" + "\n" + "33. Eliminar." + " \n"
                 + "44. Buscar" + " \n" + "99. Volver";
         int datoObtenido;
         while (true) {
@@ -33,7 +32,16 @@ public class Grafos {
                 case 0:
                     return;
                 case 11:
-                    grafoMatriz.caminoMinimoEntreDosVertices(0, 1);
+                    int[][] matriz = grafoMatriz.getMatriz();
+                    String mostrarMatriz = "";
+                    for (int iterator = 0; iterator < grafoMatriz.getSize(); iterator++) {
+                        for (int j = 0; j < grafoMatriz.getSize(); j++) {
+                            mostrarMatriz += Integer.toString(matriz[iterator][j]) + " \t";
+                        }
+                        mostrarMatriz += "\n";
+                    }
+
+                    JOptionPane.showMessageDialog(null, mostrarMatriz, "Grafo", JOptionPane.DEFAULT_OPTION);
                     break;
                 case 22:
                     int origen = obtenerEnteroPorPantalla("Ingrese el nodo origen");

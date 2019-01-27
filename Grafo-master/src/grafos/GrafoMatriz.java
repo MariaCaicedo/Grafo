@@ -1,4 +1,3 @@
-
 package grafos;
 
 import java.util.ArrayList;
@@ -141,4 +140,15 @@ public class GrafoMatriz {
         return size;
     }
 
+    int[][] getMatriz() {
+        int matrizAMostrar[][] = this.matriz;
+        for (int iterator = 0; iterator < this.size; iterator++) {
+            for (int j = 0; j < this.size; j++) {
+                if (this.matriz[iterator][j] == Integer.MAX_VALUE) {
+                    matrizAMostrar[iterator][j] = -1;
+                }
+            }
+        }
+        return matrizAMostrar;
+    }
 }

@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class GrafoMatrizTest {
+
     GrafoMatriz grafo;
 
     @Before
@@ -126,6 +126,19 @@ public class GrafoMatrizTest {
 
         assertFalse("se esperaba que inserte la arista", insertado);
         assertEquals("se esperaba que retorne el maximo entero ", Integer.MAX_VALUE, peso);
+    }
+
+    @Test
+    public void debeObtenerLAMatrizAMostrar() {
+        grafo = new GrafoMatriz(3);
+
+        grafo.insertar(0, 1, 2);
+        grafo.insertar(1, 2, 3);
+
+        int matrizAMostrar[][] = grafo.getMatriz();
+
+        assertEquals("se esperaba que el camino sin ruta sea representado por -1", -1, matrizAMostrar[0][2]);
+        assertEquals("se esperaba que no exista bucle para el nodo 0", 0, matrizAMostrar[0][0]);
     }
 
     @Test
