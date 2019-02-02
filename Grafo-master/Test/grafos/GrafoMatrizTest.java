@@ -29,7 +29,7 @@ public class GrafoMatrizTest {
 
         assertEquals("se esperaba que la maxima candidad de nodos sean 3", 3, size);
         assertEquals("se esperaba que el peso para el mismo vetice sea 0", 0, pesoMismoVertice);
-        assertEquals("se esperaba que el peso por defecto entre aristas sea el maximo entero", Integer.MAX_VALUE, pesoDefecto);
+        assertEquals("se esperaba que el peso por defecto entre aristas sea el maximo entero", grafo.MAX_VALUE, pesoDefecto);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class GrafoMatrizTest {
         int peso = grafo.getPeso(0, 1);
 
         assertFalse("se esperaba no inserte la arista", insertado);
-        assertEquals("se esperaba que retornara el maximo entero al no modificar el peso", Integer.MAX_VALUE, peso);
+        assertEquals("se esperaba que retornara el maximo entero al no modificar el peso", grafo.MAX_VALUE, peso);
 
     }
 
@@ -101,7 +101,7 @@ public class GrafoMatrizTest {
         int peso = grafo.getPeso(0, 1);
 
         assertFalse("se esperaba inserte la arista", insertado);
-        assertEquals("se esperaba que retornara el maximo entero al no haber camino entre las aristas", Integer.MAX_VALUE, peso);
+        assertEquals("se esperaba que retornara el maximo entero al no haber camino entre las aristas", grafo.MAX_VALUE, peso);
 
     }
 
@@ -121,11 +121,11 @@ public class GrafoMatrizTest {
     public void noDebePermitirInsertarPesoMaximoDeUnEntero() {
         grafo = new GrafoMatriz(3);
 
-        boolean insertado = grafo.insertar(0, 1, Integer.MAX_VALUE);
+        boolean insertado = grafo.insertar(0, 1, grafo.MAX_VALUE);
         int peso = grafo.getPeso(0, 1);
 
         assertFalse("se esperaba que inserte la arista", insertado);
-        assertEquals("se esperaba que retorne el maximo entero ", Integer.MAX_VALUE, peso);
+        assertEquals("se esperaba que retorne el maximo entero ", grafo.MAX_VALUE, peso);
     }
 
     @Test

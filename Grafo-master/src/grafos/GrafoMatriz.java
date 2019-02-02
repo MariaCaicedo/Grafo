@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public class GrafoMatriz {
 
+    public static final int MAX_VALUE = 9999;
     private static final String NO_SE_PUEDE_ACCEDER_AL_NODO = "No se puede acceder al nodo ";
     private int size;
     private int matriz[][];
@@ -38,14 +39,14 @@ public class GrafoMatriz {
                 if (i == j) {
                     matriz[i][j] = 0;
                 } else {
-                    matriz[i][j] = Integer.MAX_VALUE;
+                    matriz[i][j] = this.MAX_VALUE;
                 }
             }
         }
     }
 
     public boolean insertar(int origen, int destino, int peso) {
-        if (peso > 0 && peso < Integer.MAX_VALUE) {
+        if (peso > 0 && peso < this.MAX_VALUE) {
             try {
                 matriz[origen][destino] = peso;
                 matriz[destino][origen] = peso;
@@ -101,7 +102,7 @@ public class GrafoMatriz {
     }
 
     private int obtenerVerticeConMenorPesoYsinVisitar() {
-        int maximoPeso = Integer.MAX_VALUE;
+        int maximoPeso = this.MAX_VALUE;
         int nodo = 0;
         for (int iterator = 0; iterator < this.size; iterator++) {
             if (verticesVisitados[iterator] == 0 && distanciaMinima[iterator] < maximoPeso) {
@@ -144,7 +145,7 @@ public class GrafoMatriz {
         int matrizAMostrar[][] = this.matriz;
         for (int iterator = 0; iterator < this.size; iterator++) {
             for (int j = 0; j < this.size; j++) {
-                if (this.matriz[iterator][j] == Integer.MAX_VALUE) {
+                if (this.matriz[iterator][j] == this.MAX_VALUE) {
                     matrizAMostrar[iterator][j] = -1;
                 }
             }
