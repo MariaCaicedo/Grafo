@@ -205,4 +205,15 @@ public class GrafoMatrizTest {
 
         assertEquals("debe obtener la distancia minima", 5, distanciaMinima);
     }
+
+    @Test
+    public void debeObtenerLaDistanciaMinimaEntre0y3() {
+        grafo = new GrafoMatriz(4);
+        grafo.insertar(1, 2, 5);
+        grafo.insertar(2,3,1);
+
+        int distanciaMinima = grafo.getDistanciaMinima(1, 3);
+
+        assertEquals("debe obtener la distancia minima", 6, distanciaMinima);
+    }
 }

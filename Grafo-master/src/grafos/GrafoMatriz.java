@@ -62,15 +62,19 @@ public class GrafoMatriz {
 
     public Optional<List> caminoMinimoEntreDosVertices(int origen, int destino) {
         if (origen >= 0 && (destino < this.size && destino != origen)) {
-            if (this.origen == -1 || this.origen != origen) {
-                this.origen = origen;
-                dijkstra();
-            }
+            validateAndCalculateDijkstra(origen);
             return obtenerCamino(destino);
         }
         System.err.println("no se puede calcular un camino de un vertice inexistente; valide que el origen " + origen
                 + " y/o que el destino " + destino + " existen en el grafo.");
         return Optional.empty();
+    }
+
+    private void validateAndCalculateDijkstra(int origen) {
+        if (this.origen == -1 || this.origen != origen) {
+            this.origen = origen;
+            dijkstra();
+        }
     }
 
     private void dijkstra() {
@@ -114,7 +118,8 @@ public class GrafoMatriz {
     }
 
     private Optional<List> obtenerCamino(int destino) {
-        if (ruta.size() > 1) {
+        if (!ruta.isEmpty()) {
+            ruta.add(destino);
             return Optional.of(ruta);
         }
         return Optional.empty();
@@ -155,10 +160,7 @@ public class GrafoMatriz {
 
     int getDistanciaMinima(int origen, int destino) {
         if(destino < this.size && origen >= 0){
-            if(origen != this.origen){
-                this.origen=origen;
-                dijkstra();
-            }
+            validateAndCalculateDijkstra(origen);
             return distanciaMinima[destino];
         }else{
           System.err.println(NO_SE_PUEDE_ACCEDER_AL_NODO + 0);

@@ -54,10 +54,10 @@ public class Grafos {
                     int peso = obtenerEnteroPorPantalla("ingrese el peso de la arista");
                     boolean inserto = grafoMatriz.insertar(origen, destino, peso);
                     if (inserto) {
-                        JOptionPane.showMessageDialog(null, "Insertado", "Arista con peso " + peso + " Entre los nodos " + origen + " " + destino + " Insertada Correctamente.",
+                        JOptionPane.showMessageDialog(null, "Arista con peso " + peso + " Entre los nodos " + origen + " " + destino + " Insertada Correctamente.", "Insertado",
                                 JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Error", "Arista con peso " + peso + " Entre los nodos " + origen + " " + destino + " No insertada.",
+                        JOptionPane.showMessageDialog(null, "Arista con peso " + peso + " Entre los nodos " + origen + " " + destino + " No insertada.", "Error",
                                 JOptionPane.ERROR_MESSAGE);
                     }
                     break;
@@ -71,7 +71,7 @@ public class Grafos {
                     origen = obtenerEnteroPorPantalla("Ingrese el nodo origen");
                     destino = obtenerEnteroPorPantalla("ingrese el nodo destino");
                     int distanciaMinima = grafoMatriz.getDistanciaMinima(origen, destino);
-                    JOptionPane.showMessageDialog(null, "LA distancia minima entre los nodos "
+                    JOptionPane.showMessageDialog(null, "La distancia minima entre los nodos "
                             + origen + " y " + destino
                             + " es " + distanciaMinima,
                             "La Distancia Minima es", JOptionPane.DEFAULT_OPTION
