@@ -9,14 +9,56 @@ package dijkstra;
  * @author cristiandavid
  */
 
+import jdk.nashorn.internal.scripts.JO;
+
 import java.util.*;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 public class Dijkstra {
 
     public int distancia[] = new int[10];
     public static int costo[][] = new int[10][10];
+
+    public static void main(String[] args) {
+        String salida;
+        int c = 1;
+
+        int nodos, origen, i, iterator;
+        nodos = obtenerNumeroPorEntrada("Ingrese Datos", "Ingrese el numero de nodos");
+
+        Dijkstra d = new Dijkstra();
+        System.out.println("ingrese el costo de los pesos  de la matriz separados por espacios:  ");
+        salida = "Nodos\t _1_\t_2_\t_3_\t_4_\t_5_\t_6_\t_7_\t_8_\n";
+        for (i = 1; i <= nodos; i++) {
+            salida += c++ + "\t|";
+            for (iterator = 1; iterator <= nodos; iterator++) {
+                d.costo[i][iterator] = obtenerNumeroPorEntrada("Ingrese Datos", String.format("Ingrese nodo [%d][%d]", i, iterator));
+                salida += String.format(" %d \t", d.costo[i][iterator]);
+            }
+            salida += "\n";
+        }
+        showLongTextMessageInDialog(salida);
+
+        origen = obtenerNumeroPorEntrada("Ingrese Datos", "Ingrese vertice de origen");
+
+        d.calcularLaDistanciaMasCorta(nodos, origen);
+        salida = "las distancias minimas\n";
+        for (i = 1; i <= nodos; i++) {
+            if (i != origen) {
+                salida += String.format("la ruta mas corta desde el nodo %d al nodo %d es: %d \n", origen, i, d.distancia[i]);
+            }
+        }
+        showLongTextMessageInDialog(salida);
+
+        System.out.println("Matriz de costo");
+        for (i = 1; i <= nodos; i++) {
+            for (iterator = 1; iterator <= nodos; iterator++) {
+                System.out.print(costo[i][iterator] + "\t");
+
+            }
+            System.out.println();
+        }
+    }
 
     public void calcularLaDistanciaMasCorta(int cantidadDeNodos, int origen) {
         int flag[] = new int[cantidadDeNodos + 1];
@@ -25,7 +67,7 @@ public class Dijkstra {
 
         for (i = 1; i <= cantidadDeNodos; i++) {
             flag[i] = 0;
-            this.distancia[i] = this.costo[origen][i];//costo[1][1]=0
+            this.distancia[i] = this.costo[origen][i];
         }
         contador = 2;
         while (contador <= cantidadDeNodos) {
@@ -38,64 +80,34 @@ public class Dijkstra {
             }
             flag[minpos] = 1;
             contador++;
-            for (iterator = 1; iterator <= cantidadDeNodos; iterator++) {      // distancia y costo se refieren a la distancia del objeto actual y la matriz de coste
+            for (iterator = 1; iterator <= cantidadDeNodos; iterator++) {
                 if (this.distancia[minpos] + this.costo[minpos][iterator] < this.distancia[iterator] && flag[iterator] != 1) {
-
                     this.distancia[iterator] = this.distancia[minpos] + this.costo[minpos][iterator];
                 }
             }
         }
     }
 
-    public static void main(String[] args) {
-        // TODO code application logic here
-        JTextArea ventana = new JTextArea();
-        String salida = "NODO\t1 \t2  \t3  \t4 \t5 \n";
-        int c = 1;
-
-        int nodos, origen, i, iterator;
-        Scanner in = new Scanner(System.in);
-        System.out.println("ingrese el numero de nodos:  ");
-        nodos = in.nextInt();
-
-        Dijkstra d = new Dijkstra();
-        System.out.println("ingrese el costo de los pesos  de la matriz separados por espacios:  ");
-
-        for (i = 1; i <= nodos; i++) {
-            salida += c++ + "\t";
-            for (iterator = 1; iterator <= nodos; iterator++) {
-                d.costo[i][iterator] = in.nextInt();
-                salida += d.costo[i][iterator] + "\t";
-
-            }
-            salida += "\n";
-        }
-        ventana.setText(salida);
-        JOptionPane.showMessageDialog(null, ventana);
-
-        System.out.println("ingrese el verticwe de origen : ");
-        origen = in.nextInt();
-
-        d.calcularLaDistanciaMasCorta(nodos, origen);
-        System.out.println("la ruta mas corta desde el nodo \t" + origen + "\t a todos los desde es : \n");
-
-        for (i = 1; i <= nodos; i++) {
-            if (i != origen) {
-
-                System.out.println("origen: " + origen + "\t destino: " + i + "\t costo minimo es: " + d.distancia[i] + "\t");
-            }
-        }
-
-        System.out.println("mostramos la matriz de costo");
-
-        for (i = 0; i <= nodos; i++) {
-
-            for (iterator = 0; iterator <= nodos; iterator++) {
-                System.out.println(costo[i][iterator] + "\t");
-
-            }
-            System.out.println("");
-        }
+    public static void showLongTextMessageInDialog(String longMessage) {
+        JTextArea textArea = new JTextArea(9, 30);
+        textArea.setText(longMessage);
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        JOptionPane.showMessageDialog(null, scrollPane);
     }
 
+    public static int obtenerNumeroPorEntrada(String titulo, String mensaje) {
+        do {
+
+            String option = JOptionPane.showInputDialog(null, mensaje, titulo, JOptionPane.DEFAULT_OPTION);
+            try {
+                return Integer.parseInt(option);
+            } catch (Exception e) {
+                if ("null".equals(e.getMessage())) {
+                    return 0;
+                }
+                JOptionPane.showMessageDialog(null, "Debe ingresar un número entero\n" + e.getMessage(), "Error", JOptionPane.ERROR);
+            }
+        } while (true);
+    }
 }
